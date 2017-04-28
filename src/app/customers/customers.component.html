@@ -1,0 +1,271 @@
+<div class="row">
+  <div class="col-lg-12">
+    <h1 class="page-header">{{title}}</h1>
+  </div>
+  <!-- /.col-lg-12 -->
+</div>
+<!-- /.row-->
+<div class="row">
+  <div class="col-lg-3 col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <div class="row">
+          <div class="col-xs-3">
+            <i class="fa fa-users fa-3x"></i>
+          </div>
+          <div class="col-xs-9 text-right">
+            <div class="huge">{{customersLength}}</div>
+          </div>
+        </div>
+      </div>
+      <div class="panel-footer">
+        <div class="text-right">KLIENTÓW W BAZIE</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.row-->
+<div class="row">
+
+  <!--search customer input-->
+
+  <div class="col-md-8 search-control">
+    <input type="text" class="form-control" placeholder="Wyszukaj klienta..." ng-model="search">
+  </div>
+
+  <!-- add new customer button -->
+  <div class="col-md-4">
+    <button type="button" class="btn btn-primary btn-success center" data-toggle="modal"
+            data-target=".add-customer-modal">Dodaj nowego klienta
+    </button>
+  </div>
+</div>
+<!-- /.row -->
+<div class="alert alert-success" role="alert" *ngIf="customerIsDeleted">Klient {{selectedCustomer.name}} {{selectedCustomer.surname}} został usunięty z bazy danych</div>
+<!-- customers table -->
+<div class="row">
+  <div class="col-md-12">
+    <div class="table-responsive">
+      <table class="table table-hover">
+        <thead>
+        <tr class="info">
+          <td>ID</td>
+          <td>NAZWISKO</td>
+          <td>IMIĘ</td>
+          <td>TELEFON</td>
+          <td>MAIL</td>
+          <td>UWAGI</td>
+          <td></td>
+          <td></td>
+        </tr>
+        </thead>
+        <tbody>
+        <!-- <tr > -->
+        <tr *ngFor="let customer of customers; let i=index">
+          <td>{{i + 1}}</td>
+          <td>{{customer.surname}}</td>
+          <td>{{customer.name}}</td>
+          <td>{{customer.phone}}</td>
+          <td>{{customer.mail}}</td>
+          <td>{{customer.comments}}</td>
+          <td>
+            <button type="button" class="btn btn-primary btn-xs" data-toggle="modal"
+                    data-target=".update-customer-modal" (click)="selectCustomer(customer)">Edytuj
+            </button>
+          </td>
+          <td>
+            <button type="button" class="btn btn-danger btn-xs" data-toggle="modal" data-target=".delete-customer-modal"
+                    (click)="selectCustomer(customer)">Usuń
+            </button>
+          </td>
+        </tr>
+
+        <!-- </tr> -->
+
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- ========== confirm delete customer modal ========== -->
+
+  <div class="modal fade delete-customer-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Usuwanie klienta</h4>
+        </div>
+        <div class="modal-body">
+          <h3>Uwaga!</h3>
+          <p>Klient {{selectedCustomer.surname | uppercase}} {{selectedCustomer.name | uppercase}} zostanie usunięty z
+            twojej bazy danych.
+            Wykonać?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Rezygnuj
+          </button>
+          <button type="button" class="btn btn-danger" (click)="deleteCustomer()"
+                  data-dismiss="modal">Usuń
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <!-- ========== add customer modal ========== -->
+
+  <div class="modal fade add-customer-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Dodawanie nowego klienta</h4>
+        </div>
+        <!-- modal body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <!--name input-->
+            <div class="form-group">
+              <label for="newName" class="col-sm-4 control-label">Imię</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="newName" placeholder="Podaj imię"
+                       ng-model="newCustomerName">
+              </div>
+            </div>
+            <!--surname input-->
+            <div class="form-group">
+              <label for="newSurname" class="col-sm-4 control-label">Nazwisko</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="newSurname" placeholder="Podaj nazwisko"
+                       ng-model="newCustomerSurname">
+              </div>
+            </div>
+            <!--phone input-->
+            <div class="form-group">
+              <label for="newPhone" class="col-sm-4 control-label">Numer telefonu</label>
+              <div class="col-sm-8">
+                <input type="tel" class="form-control" id="newPhone" placeholder="Podaj numer telefonu"
+                       ng-model="newCustomerPhone">
+              </div>
+            </div>
+            <!--mail input-->
+            <div class="form-group">
+              <label for="newMail" class="col-sm-4 control-label">Adres email</label>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" id="newMail" placeholder="Podaj adres email"
+                       ng-model="newCustomerMail">
+              </div>
+            </div>
+            <!--birthday input-->
+            <div class="form-group">
+              <label for="newBirthday" class="col-sm-4 control-label">Data urodzenia</label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control" id="newBirthday" placeholder="Podaj datę urodzenia"
+                       ng-model="newCustomerBirthday">
+              </div>
+            </div>
+            <!--comments input-->
+            <div class="form-group">
+              <label for="newComments" class="col-sm-4 control-label">Uwagi</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" id="newComments" placeholder="Uwagi"
+                          ng-model="newCustomerComments"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!--modal buttons-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmDelete = false">Rezygnuj
+          </button>
+          <button type="button" class="btn btn-success" ng-click=" addNewCustomer()" data-dismiss="modal">Zapisz
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+
+  <!-- ========== update customer modal ========== -->
+
+
+  <div class="modal fade update-customer-modal" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+            aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Edytujesz klienta {{selectedCustomer.surname}} {{selectedCustomer.name}}</h4>
+        </div>
+        <!-- modal body -->
+        <div class="modal-body">
+          <form class="form-horizontal">
+            <!--name input-->
+            <div class="form-group">
+              <label for="newName" class="col-sm-4 control-label">Imię</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="updateName" ngModel="selectedCustomer.name">
+              </div>
+            </div>
+            <!--surname input-->
+            <div class="form-group">
+              <label for="newSurname" class="col-sm-4 control-label">Nazwisko</label>
+              <div class="col-sm-8">
+                <input type="text" class="form-control" id="updateSurname" ng-model="customerSurname">
+              </div>
+            </div>
+            <!--phone input-->
+            <div class="form-group">
+              <label for="newPhone" class="col-sm-4 control-label">Numer telefonu</label>
+              <div class="col-sm-8">
+                <input type="tel" class="form-control" id="updatePhone" ng-model="customerPhone">
+              </div>
+            </div>
+            <!--mail input-->
+            <div class="form-group">
+              <label for="newMail" class="col-sm-4 control-label">Adres email</label>
+              <div class="col-sm-8">
+                <input type="email" class="form-control" id="updateMail" ng-model="customerMail">
+              </div>
+            </div>
+            <!--birthday input-->
+            <div class="form-group">
+              <label for="newBirthday" class="col-sm-4 control-label">Data urodzenia</label>
+              <div class="col-sm-8">
+                <input type="date" class="form-control" id="updateBirthday" ng-model="customerBirthday">
+              </div>
+            </div>
+            <!--comments input-->
+            <div class="form-group">
+              <label for="newComments" class="col-sm-4 control-label">Uwagi</label>
+              <div class="col-sm-8">
+                <textarea class="form-control" id="updateComments" ng-model="customerComments"></textarea>
+              </div>
+            </div>
+          </form>
+        </div>
+        <!--modal buttons-->
+        <div class="modal-footer">
+          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmUpdate = false">Rezygnuj
+          </button>
+          <button type="button" class="btn btn-success" ng-click=" updateCustomer()" data-dismiss="modal">Zapisz
+          </button>
+        </div>
+      </div>
+      <!-- /.modal-content -->
+    </div>
+    <!-- /.modal-dialog -->
+  </div>
+  <!-- /.modal -->
+</div>
+
+<!-- /.row -->
+<!-- /.container-fluid -->
