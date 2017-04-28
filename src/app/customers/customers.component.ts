@@ -1,6 +1,4 @@
 import {Component, OnInit, ViewEncapsulation} from '@angular/core';
-
-// import {NgFor} from '@angular/common';
 import {Customer} from './customer';
 import {CustomersService} from './customers.service';
 
@@ -17,9 +15,9 @@ export class CustomersComponent implements OnInit {
   customers: Customer[];
   customersLength: number;
   title = 'Klienci';
-  selectedCustomer: Customer;
+  selectedCustomer: any = {};
   customerIsDeleted = false;
-  newCustomer: Customer;
+  newCustomer: any = {};
 
   constructor (private _customersService: CustomersService) {
   }
@@ -46,6 +44,11 @@ export class CustomersComponent implements OnInit {
 
   updateCustomer () {
 
+  }
+
+  addNewCustomer () {
+    this.newCustomer = new Customer(this.newCustomer.name, this.newCustomer.surname, this.newCustomer.phone, this.newCustomer.mail, this.newCustomer.comments);
+    this.customers.push(this.newCustomer);
   }
 
 }
