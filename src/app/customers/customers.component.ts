@@ -1,6 +1,6 @@
-import {Component, OnInit, Directive, ViewEncapsulation} from '@angular/core';
+import {Component, OnInit, ViewEncapsulation} from '@angular/core';
+
 // import {NgFor} from '@angular/common';
-// import {SingleCustomerComponent} from './single-customer/single-customer.component';
 import {Customer} from './customer';
 import {CustomersService} from './customers.service';
 
@@ -17,8 +17,9 @@ export class CustomersComponent implements OnInit {
   customers: Customer[];
   customersLength: number;
   title = 'Klienci';
-  selectedCustomer: any = {};
-  customerIsDeleted: boolean = false;
+  selectedCustomer: Customer;
+  customerIsDeleted = false;
+  newCustomer: Customer;
 
   constructor (private _customersService: CustomersService) {
   }
@@ -32,7 +33,6 @@ export class CustomersComponent implements OnInit {
       this.customers = res;
       this.customersLength = this.customers.length;
     });
-
   }
 
   selectCustomer (customer) {
@@ -43,4 +43,9 @@ export class CustomersComponent implements OnInit {
     this.customers.splice(this.customers.indexOf(this.selectedCustomer), 1);
     this.customerIsDeleted = true;
   }
+
+  updateCustomer () {
+
+  }
+
 }

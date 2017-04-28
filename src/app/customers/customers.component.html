@@ -29,9 +29,9 @@
 
   <!--search customer input-->
 
-  <div class="col-md-8 search-control">
-    <input type="text" class="form-control" placeholder="Wyszukaj klienta..." ng-model="search">
-  </div>
+  <!--<div class="col-md-8 search-control">-->
+  <!--<input type="text" class="form-control" placeholder="Wyszukaj klienta..." ng-model="search">-->
+  <!--</div>-->
 
   <!-- add new customer button -->
   <div class="col-md-4">
@@ -41,7 +41,9 @@
   </div>
 </div>
 <!-- /.row -->
-<div class="alert alert-success" role="alert" *ngIf="customerIsDeleted">Klient {{selectedCustomer.name}} {{selectedCustomer.surname}} został usunięty z bazy danych</div>
+<div class="alert alert-success" role="alert" *ngIf="customerIsDeleted">Klient {{selectedCustomer.name}}
+  {{selectedCustomer.surname}} został usunięty z bazy danych
+</div>
 <!-- customers table -->
 <div class="row">
   <div class="col-md-12">
@@ -134,8 +136,8 @@
             <div class="form-group">
               <label for="newName" class="col-sm-4 control-label">Imię</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="newName" placeholder="Podaj imię"
-                       ng-model="newCustomerName">
+                <input type="text" class="form-control" id="newName"  name="newName" placeholder="Podaj imię"
+                       [(model)]="newCustomer.name">
               </div>
             </div>
             <!--surname input-->
@@ -212,51 +214,44 @@
             <div class="form-group">
               <label for="newName" class="col-sm-4 control-label">Imię</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="updateName" ngModel="selectedCustomer.name">
+                <input type="text" class="form-control" name="updateName" [(ngModel)]="selectedCustomer.name">
               </div>
             </div>
             <!--surname input-->
             <div class="form-group">
               <label for="newSurname" class="col-sm-4 control-label">Nazwisko</label>
               <div class="col-sm-8">
-                <input type="text" class="form-control" id="updateSurname" ng-model="customerSurname">
+                <input type="text" class="form-control" name="updateSurname" [(ngModel)]="selectedCustomer.surname">
               </div>
             </div>
             <!--phone input-->
             <div class="form-group">
               <label for="newPhone" class="col-sm-4 control-label">Numer telefonu</label>
               <div class="col-sm-8">
-                <input type="tel" class="form-control" id="updatePhone" ng-model="customerPhone">
+                <input type="tel" class="form-control" name="updatePhone" [(ngModel)]="selectedCustomer.phone">
               </div>
             </div>
             <!--mail input-->
             <div class="form-group">
               <label for="newMail" class="col-sm-4 control-label">Adres email</label>
               <div class="col-sm-8">
-                <input type="email" class="form-control" id="updateMail" ng-model="customerMail">
-              </div>
-            </div>
-            <!--birthday input-->
-            <div class="form-group">
-              <label for="newBirthday" class="col-sm-4 control-label">Data urodzenia</label>
-              <div class="col-sm-8">
-                <input type="date" class="form-control" id="updateBirthday" ng-model="customerBirthday">
+                <input type="email" class="form-control" name="updateMail" [(ngModel)]="selectedCustomer.mail">
               </div>
             </div>
             <!--comments input-->
             <div class="form-group">
               <label for="newComments" class="col-sm-4 control-label">Uwagi</label>
               <div class="col-sm-8">
-                <textarea class="form-control" id="updateComments" ng-model="customerComments"></textarea>
+                <textarea class="form-control" name="updateComments" [(ngModel)]="selectedCustomer.comments"></textarea>
               </div>
             </div>
           </form>
         </div>
         <!--modal buttons-->
         <div class="modal-footer">
-          <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="confirmUpdate = false">Rezygnuj
+          <button type="button" class="btn btn-danger" data-dismiss="modal">Rezygnuj
           </button>
-          <button type="button" class="btn btn-success" ng-click=" updateCustomer()" data-dismiss="modal">Zapisz
+          <button type="button" class="btn btn-success" (click)=" updateCustomer()" data-dismiss="modal">Zapisz
           </button>
         </div>
       </div>
